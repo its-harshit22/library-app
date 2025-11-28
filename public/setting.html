@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library - Settings</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <script src="/js/auth-guard.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+  
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2><img src="image/logo.png" alt="Library"></h2>
+      <a href="/"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/books"><i class="fa fa-book"></i> Books</a>
+      <a href="/members"><i class="fa fa-user-graduate"></i> Members</a>
+      <a href="/issued"><i class="fa fa-book-reader"></i> Issued Books</a>
+      <a href="/settings" class="active"><i class="fa fa-cog"></i> Settings</a>
+      <a href="#" onclick="logout()" style="margin-top: auto; color: #dc3545;"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+      <div class="mobile-header">
+        <button id="menu-btn" class="menu-btn"><i class="fa fa-bars"></i></button>
+        <h3 style="margin:0;">Manage Books</h3>
+      </div>
+      <div class="welcome">Admin Settings</div>
+
+      <div class="settings-card">
+        <h3 style="margin-top: 0; margin-bottom: 20px; color: #333;">Change Credentials</h3>
+        
+        <form id="settingsForm">
+          <div class="form-group">
+            <label>Current Username</label>
+            <input type="text" id="oldUsername" required placeholder="Enter current username">
+          </div>
+          
+          <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" id="oldPassword" required placeholder="Enter current password">
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+
+          <div class="form-group">
+            <label>New Username</label>
+            <input type="text" id="newUsername" required placeholder="Enter new username">
+          </div>
+
+          <div class="form-group">
+            <label>New Password</label>
+            <input type="password" id="newPassword" required placeholder="Enter new password">
+          </div>
+
+          <button type="submit" class="btn">Update Credentials</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('settingsForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const oldUsername = document.getElementById('oldUsername').value;
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newUsername = document.getElementById('newUsername').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        try {
+            const res = await fetch('/api/auth/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ oldUsername, oldPassword, newUsername, newPassword })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert("Success! Credentials updated. Please login again.");
+                logout(); // Log them out so they can sign in with new details
+            } else {
+                alert("Error: " + data.message);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Server Error");
+        }
+    });
+  </script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

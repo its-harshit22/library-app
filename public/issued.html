@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="/js/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library - Issued Books</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <h2><img src="image/logo.png" alt="Library"></h2>
+      <a href="/"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
+      <a href="/books"><i class="fa fa-book"></i> Books</a>
+      <a href="/members"><i class="fa fa-user-graduate"></i> Members</a>
+      <a href="/issued" class="active"><i class="fa fa-book-reader"></i> Issued Books</a>
+      <a href="/settings"><i class="fa fa-cog"></i> Settings</a>
+      <a href="#" onclick="logout()"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+      <div class="mobile-header">
+        <button id="menu-btn" class="menu-btn"><i class="fa fa-bars"></i></button>
+        <h3 style="margin:0;">Manage Books</h3>
+      </div>
+      <div class="welcome">Issued Books Management</div>
+
+      <div class="toolbar">
+        <button class="btn" id="openIssueModalBtn">
+          <i class="fa fa-plus-circle"></i> Issue New Book
+        </button>
+      </div>
+
+      <table class="issued-table">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Member</th>
+            <th>Issue Date</th>
+            <th>Due Date</th>
+            <th>Status</th>
+            <th>Fine</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="issued-list">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="issueBookModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>Issue Book</h4>
+        <span class="close-btn" style="cursor:pointer; font-size:24px;">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="issueBookForm">
+          <div class="form-group">
+            <label>Select Member</label>
+            <select id="memberSelect" required>
+              <option value="">Loading...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Select Book</label>
+            <select id="bookSelect" required>
+              <option value="">Loading...</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Select Available Copy</label>
+            <select id="copySelect" required disabled>
+              <option value="">Select Book First</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="date" id="dueDate" required>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+            <button type="button" id="cancelBtn" class="btn" style="background: #6c757d;">Cancel</button>
+            <button type="submit" class="btn">Issue Book</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="/js/app.js"></script>
+  <script src="/js/issued.js"></script>
+</body>
+
+</html>
