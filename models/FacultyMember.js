@@ -6,7 +6,9 @@ const FacultyMember = sequelize.define('FacultyMember', {
   member_id: { type: DataTypes.STRING, allowNull: false, unique: true },
   name: { type: DataTypes.STRING, allowNull: false },
   department: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false }
+  email: { type: DataTypes.STRING, allowNull: false },
+  // --- NEW COLUMN ---
+  password: { type: DataTypes.STRING, allowNull: false }
 }, { tableName: 'faculty_members', timestamps: true });
 
 module.exports = FacultyMember;

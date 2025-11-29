@@ -7,7 +7,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
     process.env.DB_NAME || 'library_db',     // Cloud Name OR Local Name
     process.env.DB_USER || 'root',           // Cloud User OR Local User
-    process.env.DB_PASS || 'your_local_password', // Cloud Pass OR Local Pass
+    process.env.DB_PASS || 'KA17092004', // Cloud Pass OR Local Pass
     {
         host: process.env.DB_HOST || 'localhost',
         port: process.env.DB_PORT || 3306,

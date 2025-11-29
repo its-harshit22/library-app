@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Login - Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Override to center the card specifically for this page */
+        body { display: flex; align-items: center; justify-content: center; height: 100vh; background: #eef2f7; }
+        .login-card { width: 100%; max-width: 400px; padding: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div style="text-align: center;">
+            <img src="image/logo.png" alt="Library" style="max-width: 80px; margin-bottom: 10px;">
+            <h2 style="font-size: 24px; margin-bottom: 5px;">Member Portal</h2>
+            <p style="color: #666; margin-bottom: 25px; font-size: 14px;">Students & Faculty Login</p>
+        </div>
+        
+        <form id="userLoginForm">
+            <div class="form-group">
+                <label>Member ID</label>
+                <input type="text" id="member_id" placeholder="e.g. S001 or F001" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Login</button>
+            
+            <div id="errorMsg" style="color: #dc3545; font-size: 14px; margin-top: 15px; text-align: center; display: none;"></div>
+        </form>
+        
+        <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px; text-align: center;">
+            <a href="/login.html" style="font-size: 14px; color: #007bff; text-decoration: none;"> <i class="fa fa-user-shield"></i> Are you a Librarian/Admin?</a>
+        </div>
+    </div>
+
+    <script src="/js/user-app.js"></script>
+</body>
+</html>

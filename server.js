@@ -9,13 +9,13 @@ const BookCopy = require('./models/BookCopy');
 const FacultyMember = require('./models/FacultyMember');
 const StudentMember = require('./models/StudentMember');
 const IssuedBook = require('./models/IssuedBook');
-const Admin = require('./models/Admin'); // <--- 1. NEW IMPORT
+const Admin = require('./models/Admin');
 
 // --- Import Routes ---
 const booksRoutes = require('./routes/books');
 const membersRoutes = require('./routes/members');
 const issuedRoutes = require('./routes/issued');
-const dashboardRoutes = require('./routes/dashboard'); // <--- NEW: Import Dashboard
+const dashboardRoutes = require('./routes/dashboard');
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -32,8 +32,10 @@ app.use(express.json());
 app.use('/api/books', booksRoutes);
 app.use('/api/members', membersRoutes);
 app.use('/api/issued', issuedRoutes);
-app.use('/api/dashboard', dashboardRoutes); // <--- NEW: Use Dashboard API
-app.use('/api/auth', authRoutes); // <--- 3. NEW USE
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/user-auth', require('./routes/user-auth'));
+app.use('/api/user-dashboard', require('./routes/user-dashboard'));
 
 // --- Database Sync ---
 sequelize.sync({ alter: true }) 
@@ -44,13 +46,30 @@ sequelize.sync({ alter: true })
     console.error('❌ Error syncing database:', err);
   });
 
-// --- Page Routes ---
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
+// --- PAGE ROUTES (Updated for Landing Page Strategy) ---
+
+// 1. Root '/' -> Landing Page (Select Student/Admin)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+});
+
+// 2. Admin Dashboard -> The actual Admin Panel
+app.get('/admin-dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/admin-dashboard.html'));
+});
+
+// 3. Other Admin Pages
 app.get('/books', (req, res) => res.sendFile(path.join(__dirname, 'public/books.html')));
 app.get('/members', (req, res) => res.sendFile(path.join(__dirname, 'public/members.html')));
 app.get('/issued', (req, res) => res.sendFile(path.join(__dirname, 'public/issued.html')));
 app.get('/settings', (req, res) => res.sendFile(path.join(__dirname, 'public/setting.html')));
 
-app.listen(PORT, () => {
-  console.log(`📚 Library Server running on http://localhost:${PORT}`);
+// 4. User Pages
+app.get('/user-login.html', (req, res) => res.sendFile(path.join(__dirname, 'public/user-login.html')));
+app.get('/user-dashboard.html', (req, res) => res.sendFile(path.join(__dirname, 'public/user-dashboard.html')));
+
+
+// --- START SERVER (0.0.0.0 for Mobile Access) ---
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`📚 Library Server running on http://0.0.0.0:${PORT}`);
 });

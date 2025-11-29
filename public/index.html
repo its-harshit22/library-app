@@ -1,80 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="/js/auth-guard.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Library Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Library</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Specific Landing Page Styles */
+        body {
+            background: linear-gradient(135deg, #007bff 0%, #00d2ff 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+        .landing-card {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+        .landing-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+        .btn-student { background: #007bff; color: white; border: none; }
+        .btn-admin { background: white; color: #555; border: 2px solid #eee; }
+        
+        .landing-btn:hover { transform: translateY(-3px); }
+        .btn-student:hover { background: #0056b3; }
+        .btn-admin:hover { background: #f8f9fa; border-color: #ddd; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    
-    <div class="sidebar">
-      <h2>
-        <img src="image/logo.png" alt="Library Logo">
-      </h2>
-      <a href="/" class="active"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
-      <a href="/books"><i class="fa fa-book"></i> Books</a>
-      <a href="/members"><i class="fa fa-user-graduate"></i> Members</a>
-      <a href="/issued"><i class="fa fa-book-reader"></i> Issued Books</a>
-      <a href="/settings"><i class="fa fa-cog"></i> Settings</a>
-      <a href="#" onclick="logout()" style="margin-top: auto; color: #dc3545;"><i class="fa fa-sign-out-alt"></i> Logout</a>
+
+    <div class="landing-card">
+        <img src="image/logo.png" alt="Library Logo" style="max-width: 100px; margin-bottom: 20px;">
+        <h1 style="margin: 0 0 10px; color: #333;">Library Portal</h1>
+        <p style="color: #666; margin-bottom: 30px;">Select your role to continue</p>
+
+        <a href="/user-login.html" class="landing-btn btn-student">
+            <i class="fa fa-user-graduate"></i> Student / Faculty Login
+        </a>
+
+        <a href="/login.html" class="landing-btn btn-admin">
+            <i class="fa fa-user-shield"></i> Admin Login
+        </a>
     </div>
 
-    <div class="main">
-      
-      <div class="mobile-header">
-        <button id="menu-btn" class="menu-btn">
-            <i class="fa fa-bars"></i>
-        </button>
-        <h3 style="margin:0;">Library Dashboard</h3>
-      </div>
-
-      <div class="welcome">Welcome, <strong>Harshit Kushwah</strong></div>
-
-      <div class="stats">
-        <div class="stat-card">
-          <h3 id="total-copies">...</h3> <p>Total Books (Copies)</p>
-        </div>
-        <div class="stat-card">
-            <h3 id="total-titles">...</h3> <p>Unique Titles</p>
-        </div>
-        <div class="stat-card">
-          <h3 id="total-members">...</h3> <p>Total Members</p>
-        </div>
-        <div class="stat-card">
-          <h3 id="active-issues">...</h3> <p>Books Issued</p>
-        </div>
-      </div>
-
-      <div class="flex-row">
-        <div class="flex-col">
-          <div class="section">
-            <h4>Recent Activities</h4>
-            <ul class="activities">
-              <li>Loading activities...</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="flex-col">
-          <div class="section assignments">
-            <h4>Books Due Soon</h4>
-            <div style="color:#888;">Loading...</div>
-          </div>
-
-          <div class="section events">
-            <h4>Upcoming Events</h4>
-            <div>Book Fair <span>Wed, Oct 15, 10:00 AM</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="/js/app.js"></script>
-  <script src="/js/dashboard.js"></script>
 </body>
 </html>

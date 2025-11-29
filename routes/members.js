@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs'); // <--- Import bcrypt
 const FacultyMember = require('../models/FacultyMember');
 const StudentMember = require('../models/StudentMember');
 
-// --- GET Routes (Fetch All) ---
+// --- GET Routes ---
 router.get('/faculty', async (req, res) => {
     try {
         const faculty = await FacultyMember.findAll();
@@ -18,22 +19,36 @@ router.get('/students', async (req, res) => {
     } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-// --- POST Routes (Add New) ---
+// --- POST Routes (Add New) - UPDATED WITH PASSWORD ---
 router.post('/faculty', async (req, res) => {
     try {
-        const newMember = await FacultyMember.create(req.body);
+        // Hash default password '123456'
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash('123456', salt);
+
+        const newMember = await FacultyMember.create({
+            ...req.body,
+            password: hashedPassword // <--- Auto-add password
+        });
         res.status(201).json(newMember);
     } catch (err) { res.status(400).json({ message: err.message }); }
 });
 
 router.post('/students', async (req, res) => {
     try {
-        const newMember = await StudentMember.create(req.body);
+        // Hash default password '123456'
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash('123456', salt);
+
+        const newMember = await StudentMember.create({
+            ...req.body,
+            password: hashedPassword // <--- Auto-add password
+        });
         res.status(201).json(newMember);
     } catch (err) { res.status(400).json({ message: err.message }); }
 });
 
-// --- NEW: DELETE Routes ---
+// --- DELETE Routes ---
 router.delete('/faculty/:id', async (req, res) => {
     try {
         await FacultyMember.destroy({ where: { id: req.params.id } });
@@ -48,7 +63,7 @@ router.delete('/students/:id', async (req, res) => {
     } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-// --- NEW: PUT Routes (Update) ---
+// --- PUT Routes ---
 router.put('/faculty/:id', async (req, res) => {
     try {
         await FacultyMember.update(req.body, { where: { id: req.params.id } });

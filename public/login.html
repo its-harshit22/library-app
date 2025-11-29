@@ -55,7 +55,7 @@
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('username', data.username);
                     // Redirect to Dashboard
-                    window.location.href = '/'; 
+                    window.location.href = '/admin-dashboard';
                 } else {
                     // FAIL: Show Error
                     errorMsg.innerText = data.message;
