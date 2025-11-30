@@ -130,3 +130,55 @@ function userLogout() {
     localStorage.removeItem('user_role');
     window.location.href = '/user-login.html';
 }
+
+// --- 4. SETTINGS MODAL LOGIC ---
+const settingsModal = document.getElementById("settingsModal");
+const openSettingsBtn = document.getElementById("openSettingsBtn");
+const closeSettingsX = document.querySelector(".close-settings-btn");
+const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+const passForm = document.getElementById("changePasswordForm");
+
+if (openSettingsBtn) {
+    // Open Modal
+    openSettingsBtn.addEventListener("click", () => {
+        settingsModal.style.display = "block";
+    });
+
+    // Close Modal
+    const closeSettings = () => {
+        settingsModal.style.display = "none";
+        passForm.reset();
+    };
+
+    if(closeSettingsX) closeSettingsX.addEventListener("click", closeSettings);
+    if(closeSettingsBtn) closeSettingsBtn.addEventListener("click", closeSettings);
+
+    // Handle Form Submit
+    passForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const member_id = localStorage.getItem('member_id');
+        const oldPassword = document.getElementById("oldPass").value;
+        const newPassword = document.getElementById("newPass").value;
+
+        try {
+            const res = await fetch('/api/user-auth/change-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ member_id, oldPassword, newPassword })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                alert("Password Updated! Please login again.");
+                userLogout(); // Force logout for security
+            } else {
+                alert("Error: " + data.message);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Server Error");
+        }
+    });
+}
