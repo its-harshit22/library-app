@@ -39,6 +39,8 @@ app.use('/api/user-dashboard', require('./routes/user-dashboard'));
 
 // --- Database Sync ---
 // Check if we need to wipe the database (useful for fixing cloud errors)
+// --- Database Sync ---
+// Force: true wipes the database. Use ONLY when fixing schema errors.
 const forceReset = process.env.FORCE_DB_RESET === 'true';
 
 sequelize.sync({ alter: true, force: forceReset }) 
