@@ -7,7 +7,9 @@ const transporter = nodemailer.createTransport({
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    // 👇 THIS IS THE MAGIC FIX 👇
+    family: 4 // Forces the code to use IPv4 instead of IPv6
 });
 
 // 2. Function to Send Login Details
