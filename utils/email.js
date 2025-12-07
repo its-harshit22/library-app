@@ -2,14 +2,15 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Use SSL
+    port: 587,              // <--- CHANGED: Standard Submission Port
+    secure: false,          // <--- CHANGED: Must be false for 587
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     },
-    // 👇 THIS IS THE MAGIC FIX 👇
-    family: 4 // Forces the code to use IPv4 instead of IPv6
+    tls: {
+        rejectUnauthorized: false // <--- EXTRA FIX: Ignora certificate errors if any
+    }
 });
 
 // 2. Function to Send Login Details
