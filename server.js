@@ -38,9 +38,12 @@ app.use('/api/user-auth', require('./routes/user-auth'));
 app.use('/api/user-dashboard', require('./routes/user-dashboard'));
 
 // --- Database Sync ---
-sequelize.sync({ alter: true }) 
+// Check if we need to wipe the database (useful for fixing cloud errors)
+const forceReset = process.env.FORCE_DB_RESET === 'true';
+
+sequelize.sync({ alter: true, force: forceReset }) 
   .then(() => {
-    console.log('✅ Database Synced');
+    console.log(`✅ Database Synced (Force Reset: ${forceReset})`);
   })
   .catch(err => {
     console.error('❌ Error syncing database:', err);
